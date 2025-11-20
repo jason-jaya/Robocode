@@ -178,12 +178,13 @@ public class SampleStudentBot extends AdvancedRobot {
 
     static Random random = new Random();
 
+    private boolean flashToggle;
+
     private void changeColor() {
-        setColors(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)),
-                new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)),
-                new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)),
-                new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)),
-                new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+        Color on = flashToggle ? Color.white : Color.black;
+        Color off = flashToggle ? Color.black : Color.white;
+        flashToggle = !flashToggle;
+        setColors(on, off, on, off, on);
     }
 
     public void onWin(WinEvent event) {
