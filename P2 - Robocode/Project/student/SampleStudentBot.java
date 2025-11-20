@@ -221,6 +221,7 @@ public class SampleStudentBot extends AdvancedRobot {
         targetPoint.y = myRobot.y;
         targetBot = new Robot();
         targetBot.alive = false;
+        changeColor();
         setAdjustGunForRobotTurn(true);
         setAdjustRadarForGunTurn(true);
         if (getOthers() > 1) {
@@ -269,6 +270,7 @@ public class SampleStudentBot extends AdvancedRobot {
                 en = new Robot();
                 enemyList.put(e.getName(), en);
             }
+            changeColor();
             en.absoluteBearingRadians = e.getBearingRadians();
             en.setLocation(new Point2D.Double(
                     myRobot.x + e.getDistance() * Math.sin(getHeadingRadians() + en.absoluteBearingRadians),
@@ -290,6 +292,7 @@ public class SampleStudentBot extends AdvancedRobot {
                 targetBot = en;
             }
         } else {
+            changeColor();
             setScanColor(Color.red);
             Robot enemy = new Robot();
             enemy.absoluteBearingRadians = getHeadingRadians() + e.getBearingRadians();
