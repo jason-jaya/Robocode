@@ -293,7 +293,6 @@ public class SampleStudentBot extends AdvancedRobot {
             }
         } else {
             changeColor();
-            setScanColor(Color.red);
             Robot enemy = new Robot();
             enemy.absoluteBearingRadians = getHeadingRadians() + e.getBearingRadians();
             enemy.dist = e.getDistance();
