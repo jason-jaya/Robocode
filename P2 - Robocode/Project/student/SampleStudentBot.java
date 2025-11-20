@@ -17,9 +17,6 @@ import robocode.ScannedRobotEvent;
 import robocode.WinEvent;
 import robocode.util.Utils;
 
-/**
- * Adapted melee + guess-factor bot based on Cham; retuned constants and color cycling.
- */
 
 public class SampleStudentBot extends AdvancedRobot {
     static double BULLET_POWER = 2.8;
