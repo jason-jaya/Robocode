@@ -8,7 +8,7 @@ import java.awt.Color;
 /**
  * Second team member using the same behavior as SampleStudentBot.
  */
-public class SampleStudentBotTwo extends AdvancedRobot {
+public class SampleStudentBotTwo extends TeamRobot {
 
     // --- Enemy data container ---
     private static class Enemy {
@@ -39,10 +39,10 @@ public class SampleStudentBotTwo extends AdvancedRobot {
 
     @Override
     public void run() {
-        setBodyColor(Color.BLACK);
-        setGunColor(Color.DARK_GRAY);
-        setRadarColor(Color.GREEN);
-        setBulletColor(Color.ORANGE);
+        setBodyColor(Color.YELLOW);
+        setGunColor(Color.YELLOW);
+        setRadarColor(Color.YELLOW);
+        setBulletColor(Color.YELLOW);
         setScanColor(Color.YELLOW);
         setAdjustGunForRobotTurn(true);
         setAdjustRadarForGunTurn(true);
