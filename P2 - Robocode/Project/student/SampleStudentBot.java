@@ -178,6 +178,11 @@ public class SampleStudentBot extends TeamRobot {
     private static final Color TEAM_COLOR = Color.black;
     private boolean flashToggle;
 
+    private boolean isFriendlyScan(ScannedRobotEvent event) {
+        // Teammates are painted black; skip any scan that resolves to a teammate to avoid friendly fire.
+        return isTeammate(event.getName());
+    }
+
     private void changeColor() {
         Color on = flashToggle ? Color.white : Color.black;
         Color off = flashToggle ? Color.black : Color.white;
@@ -262,6 +267,12 @@ public class SampleStudentBot extends TeamRobot {
 
     public void onScannedRobot(ScannedRobotEvent e) {
         changeColor();
+        if (isFriendlyScan(e)) {
+            if (getRadarTurnRemainingRadians() == 0) {
+                setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
+            }
+            return;
+        }
         if (getOthers() > 1) {
             Robot en = enemyList.get(e.getName());
             if (en == null) {
