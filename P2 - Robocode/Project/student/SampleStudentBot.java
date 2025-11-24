@@ -9,16 +9,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import robocode.AdvancedRobot;
 import robocode.Condition;
 import robocode.RobotDeathEvent;
 import robocode.Rules;
 import robocode.ScannedRobotEvent;
+import robocode.TeamRobot;
 import robocode.WinEvent;
 import robocode.util.Utils;
 
 
-public class SampleStudentBot extends AdvancedRobot {
+public class SampleStudentBot extends TeamRobot {
     static double BULLET_POWER = 2.8;
 
     class Robot extends Point2D.Double {
@@ -63,10 +63,10 @@ public class SampleStudentBot extends AdvancedRobot {
         private static final double REVERSE_TUNER = 0.43;
         private static final double DEFAULT_EVASION = 1.25;
         private static final double WALL_BOUNCE_TUNER = 0.71;
-        private final AdvancedRobot robot;
+        private final TeamRobot robot;
         private double direction = 0.45;
 
-        Movement1v1(AdvancedRobot _robot) {
+        Movement1v1(TeamRobot _robot) {
             this.robot = _robot;
         }
 
@@ -118,9 +118,9 @@ public class SampleStudentBot extends AdvancedRobot {
         private static final int[][][][] statBuffers = new int[DISTANCE_INDEXES][VELOCITY_INDEXES][VELOCITY_INDEXES][BINS];
         private int[] buffer;
         private double distanceTraveled;
-        private final AdvancedRobot robot;
+        private final TeamRobot robot;
 
-        Wave(AdvancedRobot _robot) {
+        Wave(TeamRobot _robot) {
             this.robot = _robot;
         }
 
