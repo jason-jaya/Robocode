@@ -175,24 +175,15 @@ public class SampleStudentBot extends TeamRobot {
 
     static Random random = new Random();
 
-    private static final Color TEAM_COLOR = Color.black;
-    private boolean flashToggle;
+    private static final Color TEAM_COLOR = Color.yellow;
 
     private boolean isFriendlyScan(ScannedRobotEvent event) {
-        // Teammates are painted black; skip any scan that resolves to a teammate to avoid friendly fire.
+        // Skip any scan that resolves to a teammate to avoid friendly fire.
         return isTeammate(event.getName());
-    }
-
-    private void changeColor() {
-        Color on = flashToggle ? Color.white : Color.black;
-        Color off = flashToggle ? Color.black : Color.white;
-        flashToggle = !flashToggle;
-        setColors(on, off, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR);
     }
 
     public void onWin(WinEvent event) {
         while (true) {
-            changeColor();
             turnRadarRight(360);
         }
     }
@@ -224,7 +215,7 @@ public class SampleStudentBot extends TeamRobot {
         targetPoint.y = myRobot.y;
         targetBot = new Robot();
         targetBot.alive = false;
-        changeColor();
+        setColors(TEAM_COLOR, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR);
         setAdjustGunForRobotTurn(true);
         setAdjustRadarForGunTurn(true);
         if (getOthers() > 1) {
@@ -266,7 +257,6 @@ public class SampleStudentBot extends TeamRobot {
     }
 
     public void onScannedRobot(ScannedRobotEvent e) {
-        changeColor();
         if (isFriendlyScan(e)) {
             if (getRadarTurnRemainingRadians() == 0) {
                 setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
@@ -279,7 +269,6 @@ public class SampleStudentBot extends TeamRobot {
                 en = new Robot();
                 enemyList.put(e.getName(), en);
             }
-            changeColor();
             en.absoluteBearingRadians = e.getBearingRadians();
             en.setLocation(new Point2D.Double(
                     myRobot.x + e.getDistance() * Math.sin(getHeadingRadians() + en.absoluteBearingRadians),
@@ -301,7 +290,6 @@ public class SampleStudentBot extends TeamRobot {
                 targetBot = en;
             }
         } else {
-            changeColor();
             Robot enemy = new Robot();
             enemy.absoluteBearingRadians = getHeadingRadians() + e.getBearingRadians();
             enemy.dist = e.getDistance();
