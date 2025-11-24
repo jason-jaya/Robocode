@@ -9,16 +9,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import robocode.AdvancedRobot;
 import robocode.Condition;
 import robocode.RobotDeathEvent;
 import robocode.Rules;
 import robocode.ScannedRobotEvent;
+import robocode.TeamRobot;
 import robocode.WinEvent;
 import robocode.util.Utils;
 
 
-public class SampleStudentBot extends AdvancedRobot {
+public class SampleStudentBot extends TeamRobot {
     static double BULLET_POWER = 2.8;
 
     class Robot extends Point2D.Double {
@@ -63,10 +63,10 @@ public class SampleStudentBot extends AdvancedRobot {
         private static final double REVERSE_TUNER = 0.43;
         private static final double DEFAULT_EVASION = 1.25;
         private static final double WALL_BOUNCE_TUNER = 0.71;
-        private final AdvancedRobot robot;
+        private final TeamRobot robot;
         private double direction = 0.45;
 
-        Movement1v1(AdvancedRobot _robot) {
+        Movement1v1(TeamRobot _robot) {
             this.robot = _robot;
         }
 
@@ -118,9 +118,9 @@ public class SampleStudentBot extends AdvancedRobot {
         private static final int[][][][] statBuffers = new int[DISTANCE_INDEXES][VELOCITY_INDEXES][VELOCITY_INDEXES][BINS];
         private int[] buffer;
         private double distanceTraveled;
-        private final AdvancedRobot robot;
+        private final TeamRobot robot;
 
-        Wave(AdvancedRobot _robot) {
+        Wave(TeamRobot _robot) {
             this.robot = _robot;
         }
 
@@ -175,19 +175,15 @@ public class SampleStudentBot extends AdvancedRobot {
 
     static Random random = new Random();
 
-    private static final Color TEAM_COLOR = Color.black;
-    private boolean flashToggle;
+    private static final Color TEAM_COLOR = Color.yellow;
 
-    private void changeColor() {
-        Color on = flashToggle ? Color.white : Color.black;
-        Color off = flashToggle ? Color.black : Color.white;
-        flashToggle = !flashToggle;
-        setColors(on, off, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR);
+    private boolean isFriendlyScan(ScannedRobotEvent event) {
+        // Skip any scan that resolves to a teammate to avoid friendly fire.
+        return isTeammate(event.getName());
     }
 
     public void onWin(WinEvent event) {
         while (true) {
-            changeColor();
             turnRadarRight(360);
         }
     }
@@ -219,7 +215,7 @@ public class SampleStudentBot extends AdvancedRobot {
         targetPoint.y = myRobot.y;
         targetBot = new Robot();
         targetBot.alive = false;
-        changeColor();
+        setColors(TEAM_COLOR, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR, TEAM_COLOR);
         setAdjustGunForRobotTurn(true);
         setAdjustRadarForGunTurn(true);
         if (getOthers() > 1) {
@@ -261,14 +257,18 @@ public class SampleStudentBot extends AdvancedRobot {
     }
 
     public void onScannedRobot(ScannedRobotEvent e) {
-        changeColor();
+        if (isFriendlyScan(e)) {
+            if (getRadarTurnRemainingRadians() == 0) {
+                setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
+            }
+            return;
+        }
         if (getOthers() > 1) {
             Robot en = enemyList.get(e.getName());
             if (en == null) {
                 en = new Robot();
                 enemyList.put(e.getName(), en);
             }
-            changeColor();
             en.absoluteBearingRadians = e.getBearingRadians();
             en.setLocation(new Point2D.Double(
                     myRobot.x + e.getDistance() * Math.sin(getHeadingRadians() + en.absoluteBearingRadians),
@@ -290,7 +290,6 @@ public class SampleStudentBot extends AdvancedRobot {
                 targetBot = en;
             }
         } else {
-            changeColor();
             Robot enemy = new Robot();
             enemy.absoluteBearingRadians = getHeadingRadians() + e.getBearingRadians();
             enemy.dist = e.getDistance();

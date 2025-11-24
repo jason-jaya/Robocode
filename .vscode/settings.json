@@ -1,0 +1,8 @@
+{
+  "java.debug.settings.onBuildFailureProceed": true,
+  "java.project.sourcePaths": [
+    "P2 - Robocode/env/compilers",
+    "P2 - Robocode/Project"
+  ],
+  "java.project.referencedLibraries": []
+}
