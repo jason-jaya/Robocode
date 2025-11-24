@@ -1,5 +1,4 @@
 package student;
-// Design created by Jason Jaya.
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
@@ -19,7 +18,7 @@ import robocode.WinEvent;
 import robocode.util.Utils;
 
 
-public class SampleStudentBot extends TeamRobot {
+public class JJ extends TeamRobot {
     static double BULLET_POWER = 2.8;
 
     class Robot extends Point2D.Double {
@@ -158,7 +157,7 @@ public class SampleStudentBot extends TeamRobot {
 
         private int currentBin() {
             int bin = (int) Math.round(((Utils.normalRelativeAngle
-                    (SampleStudentBot.Utility.absoluteBearing(gunLocation, targetLocation) - bearing)) /
+                    (JJ.Utility.absoluteBearing(gunLocation, targetLocation) - bearing)) /
                     (lateralDirection * BIN_WIDTH)) + MIDDLE_BIN);
             return (int) Utility.clamp(bin, 0, BINS - 1);
         }

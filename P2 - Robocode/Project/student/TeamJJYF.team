@@ -1,0 +1,7 @@
+#Robocode robot team
+#Generated 2025-11-24
+team.members=student.FZ,student.YC,student.JZ,student.JJ
+team.author.name=StudentBots
+robocode.version=
+team.webpage=
+team.description=Four student bots: core strafing, predictive aim, wall runner, and adaptive evader working together.
