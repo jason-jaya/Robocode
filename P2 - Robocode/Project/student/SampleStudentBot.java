@@ -1,4 +1,5 @@
 package student;
+// Design created by Jason Jaya.
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
